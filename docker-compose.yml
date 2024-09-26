@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: final-frontend
+    build:
+      context: ./frontend  # Ubicación del Dockerfile del frontend
+      dockerfile: Dockerfile  # Nombre del Dockerfile (opcional si se llama 'Dockerfile')
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 del host al contenedor
+    volumes:
+      - ./frontend:/app  # Sincroniza el código del frontend con el contenedor
+    environment:
+      - NODE_ENV=development
+    restart: always
+    depends_on:
+      - backend  # El frontend depende del backend para estar listo
+
+  backend:
+    container_name: final-backend
+    build:
+      context: ./backend  # Ubicación del Dockerfile del backend
+      dockerfile: Dockerfile  # Nombre del Dockerfile (opcional si se llama 'Dockerfile')
+    ports:
+      - "3001:3001"  # Mapea el puerto 3001 del host al contenedor
+    volumes:
+      - ./backend:/app  # Sincroniza el código del backend con el contenedor
+    environment:
+      - NODE_ENV=development
+    restart: always
